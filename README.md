@@ -8,5 +8,5 @@
 # <div align="center">Dijkstra's Canvas</div>
 
 Dijkstra's Canvas is a web app that allows users to draw a visual undirected weighted graph with the mouse,
-and assign weights to the the edges of the graph. After weights are applied to the edges, Dijkstra's algorithm
-can be used on the graph, giving the shortest path between two given vertices.
+where weights are automatically assigned to the the edges based on their length. After drawing the graph, Dijkstra's algorithm
+can be applied to the graph, giving the shortest path between two given vertices.
