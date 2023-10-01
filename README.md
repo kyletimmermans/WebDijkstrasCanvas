@@ -18,6 +18,7 @@ can be applied to the graph, giving the shortest path between two given vertices
 2. cd into _/src_
 3. Run: **python3 -m http.server**
 4. Visit localhost:8000/main.html in your web browser
+5. Use right-click to place vertices, and use left-click to draw edges between them
 
 </br>
 
