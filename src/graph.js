@@ -42,8 +42,9 @@ export class Graph {
             return 2;
         }
 
-        // Set each vertices pointer to one another
+        // Set each vertices' pointer to one another,
         // to be equal to their edge weight
+        // v1 point to v2 & v2 point to v1
         let glength = this.graph.length;
         for (let i = 0; i < glength; i++) {
             if (i == v1) {

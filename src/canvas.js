@@ -1,4 +1,4 @@
-// Use 5.9.2
+// Use 5.9.2 which has d3.mouse()
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@5.9.2/+esm";
 import {Graph} from './graph.js';
 
@@ -8,19 +8,33 @@ const G = new Graph();
 // If 2nd click, next click is 1st (reset)
 var clickTracker = 1;
 
-var labelTracker = 'A'; // Store letter label for node
-var cords = []; // Store coords for every node
-var tempv = []; // For edge drawing between 2 vertices
+var labelTracker = 'A'; // Store letter label for vertex
 
+// Store coords for every node
+// Used for edge weight distance
+// and preventing circle overlapping
+var coords = [];
+
+// For edge drawing between 2 vertices
+// Store the 2 currently selected vertices (the last 2 vertices clicked)
+// "Temporary Vertices"
+var tempv = [];
+
+
+// Create d3 window
 var svg = d3.select("body").append("svg") 
     .attr("width", Math.round(screen.availWidth/1.5))
     .attr("height", window.innerHeight-20)
     .on("contextmenu", drawVertex);
-    
+
+
 // Used w/ clickTracker
 // Keep track of src and dst node click
 //    src -> dst, src -> dst, etc
 // And keep track of which vertices we are connecting
+
+// v = the vertex we just clicked on so we know which vertices
+// we're working with here
 function drawEdge(v) {
     if (clickTracker == 1) {
         // Put letter to number e.g. "A" == 0 (1st node in actual graph)
@@ -39,12 +53,11 @@ function drawEdge(v) {
         // If addEdge is unsuccessful
         if (check != 0) {
             if (check == 1)
-                console.error("Can't create edge to same vertex!");
+                console.error("Can't create an edge to the same vertex!");
             if (check == 2)
                 console.error("Edge already exists between these two vertices!");
 
-            // No need for anything here, graph class will
-            // never have added anything
+            // No need for anything here, graph class will never have added anything
         }
 
         // Reset so new edge can be drawn
@@ -55,6 +68,7 @@ function drawEdge(v) {
         tempv.pop();
    }
 }
+
 
 /* If the distance between the centers of the circles
    is less than the radius of both circles (buffer area), then they
@@ -76,7 +90,11 @@ function circleOverlap(c1, c2, r) {
         return false;
     }
 }
-    
+
+
+// Create green circles and keep track of their
+// coords. Also attach click event handlers so
+// that each left click is a drawEdge() function
 function drawVertex() {
     // Limit amount of vertices
     if (labelTracker > "Z") {
@@ -88,29 +106,33 @@ function drawVertex() {
     var m = d3.mouse(this);
     
     // Check for vertex overlap
-    let clength = cords.length;
+    let clength = coords.length;
     for (let i = 0; i < clength; i++) {
-        if (circleOverlap([m[0], m[1]], cords[i], 25)) {
+        if (circleOverlap([m[0], m[1]], coords[i], 25)) {
             console.error("Overlap!");
             return;    
         }
     }
 
+    // Draw circle
     var vertex = svg.append("circle")
         .attr('cx', m[0])
         .attr('cy', m[1])
         .attr('r', 25)
         .style('fill', 'green');
-     
-    cords.push([labelTracker, m[0], m[1]]);
+    
+    // Add its coords to the list (x, y)
+    coords.push([labelTracker, m[0], m[1]]);
    
+    // Label the circle with a letter
     var vertexLabel = svg.append('text')
         .attr('x', m[0])
         .attr('y', m[1])
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
         .text(labelTracker);
-      
+    
+    // Add vertex to actual graph
     G.addVertex();
     
     // Creates a local copy of labelTracker that is specific to the
@@ -131,6 +153,6 @@ function drawVertex() {
         drawEdge(vertexAttr);
     });
     
-    // Get current letter, turn to num, add 1, back to character
+    // Get current letter, turn to num, add 1, turn back to new character
     labelTracker = String.fromCharCode(labelTracker.charCodeAt(0) + 1);
 }
