@@ -17,3 +17,7 @@ can be applied to the graph, giving the shortest path between two given vertices
 2. cd into _/src_
 3. Run: **python3 -m http.server**
 4. Visit localhost:8000/main.html in your web browser
+
+</br>
+
+Check out [Tkinter Dijkstra's Canvas](https://github.com/kyletimmermans/tkinter-dijkstras-canvas/) which was made in Python and Tkinter!
