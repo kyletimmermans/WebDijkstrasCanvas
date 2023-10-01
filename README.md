@@ -9,3 +9,9 @@
 Dijkstra's Canvas is a web app that allows users to draw a visual undirected weighted graph with the mouse,
 where weights are automatically assigned to the the edges based on their length. After drawing the graph, Dijkstra's algorithm
 can be applied to the graph, giving the shortest path between two given vertices.
+
+## How to run it:
+1. Download / clone this repository
+2. cd into _/src_
+3. Run: **python3 -m http.server**
+4. Visit localhost:8000/main.html in your web browser
