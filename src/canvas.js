@@ -89,8 +89,12 @@ function drawEdge(v, m) {
             // We need the centers of both vertices so we can
             // draw the pretty path between them
 
-            // tempv is just the vertex # used in the actual DS here
-            let p = prettyPoints(tempv[0], tempv[1])
+            // Get coords of specific vertices by using their letter to find them
+            let c1 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[0]+65));
+            let c2 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[1]+65));
+
+            // Create pretty points for nice path to be drawn from node-to-node
+            let p = prettyPoints([c1[1], c1[2]], [c2[1], c2[2]])
             
             // Make path object bc it can take textPath label
             // And use the coords from the line
