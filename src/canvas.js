@@ -27,7 +27,7 @@ var line;
 // Create d3 window
 var svg = d3.select("body").append("svg") 
     .attr("width", Math.round(screen.availWidth/1.5))
-    .attr("height", window.innerHeight-20)
+    .attr("height", window.innerHeight)
     .on("contextmenu", drawVertex);
 
 
@@ -70,11 +70,16 @@ function drawEdge(v, m) {
 
         // Put in 2nd clicked vertex into tempv
         tempv.push(v.charCodeAt(0)-65)
+
+        // Get coords of specific vertices by using their letter to find them
+        let c1 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[0]+65));
+        let c2 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[1]+65));
         
         // Weight = Distance between points / 10
-        let dx = tempv[0][0] - tempv[1][0];
-        let dy = tempv[0][1] - tempv[1][1];
+        let dx = c1[1] - c2[1];
+        let dy = c1[2] - c2[2];
         let weight = Math.round(Math.sqrt(dx*dx+dy*dy) / 10);
+        console.log(weight)
 
         var check = G.addEdge(tempv[0], tempv[1], weight);
 
@@ -86,20 +91,23 @@ function drawEdge(v, m) {
         }
 
         if (check == 0) {
-            // We need the centers of both vertices so we can
-            // draw the pretty path between them
-
-            // Get coords of specific vertices by using their letter to find them
-            let c1 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[0]+65));
-            let c2 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[1]+65));
-
             // Create pretty points for nice path to be drawn from node-to-node
             let p = prettyPoints([c1[1], c1[2]], [c2[1], c2[2]])
             
-            // Make path object bc it can take textPath label
-            // And use the coords from the line
+            // Generate randomIDs so each path can have a textPath find it uniquely
+            let random = new Uint32Array(1);crypto.getRandomValues(random);
+            
             svg.append("path")
-              .attr("d", "M "+p[0]+" "+p[1]+" L "+p[2]+" "+p[3]);
+                .attr("id", random[0].toString())
+                .attr("d", "M "+p[0]+" "+p[1]+" L "+p[2]+" "+p[3]);
+
+            svg.append("text")
+                .attr("dy", -5)
+                .append("textPath")
+                .attr("xlink:href","#"+random[0].toString())
+                .style("text-anchor","middle") 
+                .attr("startOffset","50%")
+                .text(weight);
         } else if (check == 1) {
             console.error("Can't create an edge to the same vertex!");
         } else if (check == 2) {
