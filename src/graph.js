@@ -67,7 +67,7 @@ export class Graph {
 
 
     // Reset graph
-    reset() {
+    resetGraph() {
         this.graph = [];
     }
 
