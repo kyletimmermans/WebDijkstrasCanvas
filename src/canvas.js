@@ -52,7 +52,8 @@ function drawEdge(v, m) {
         // 2nd line point (end point) on mousemove
         svg.on("mousemove", function() {
             var m2 = d3.mouse(this);
-            // -1 so the line doesn't get in the way of the pointer
+            // -1 so the path line doesn't get in the way of 
+            // what the pointer (cursor) is actually intending to click
             line.attr("x2", m2[0]-1).attr("y2", m2[1]-1)
         });
 
@@ -79,7 +80,6 @@ function drawEdge(v, m) {
         let dx = c1[1] - c2[1];
         let dy = c1[2] - c2[2];
         let weight = Math.round(Math.sqrt(dx*dx+dy*dy) / 10);
-        console.log(weight)
 
         var check = G.addEdge(tempv[0], tempv[1], weight);
 
