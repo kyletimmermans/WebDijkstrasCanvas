@@ -26,7 +26,7 @@ var line;
 
 // Create d3 window
 var svg = d3.select("body").append("svg") 
-    .attr("width", Math.round(screen.availWidth/1.5))
+    .attr("width", Math.round(screen.availWidth/1.55))
     .attr("height", window.innerHeight)
     .on("contextmenu", drawVertex);
 
