@@ -24,10 +24,14 @@ var tempv = [];
 // 1st part of drawEdge and then the 2nd part later
 var line;
 
+// Fit into Bootstrap HTML container, don't hardcode dimensions
+var containerWidth = document.getElementById("canvas").getBoundingClientRect().width;
+var containerHeight = document.getElementById("canvas").getBoundingClientRect().height;
+
 // Create d3 window
 var svg = d3.select("body").append("svg") 
-    .attr("width", Math.round(screen.availWidth/1.55))
-    .attr("height", window.innerHeight)
+    .attr("width", containerWidth)
+    .attr("height", containerHeight)
     .on("contextmenu", drawVertex);
 
 
