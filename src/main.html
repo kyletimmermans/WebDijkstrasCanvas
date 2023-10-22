@@ -47,17 +47,23 @@ text {
 
             <!-- 1/3 of screen (right) -->
             <div class="col-lg-4">
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
-                <div>Hi!</div>
+
+                <!-- Title -->
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
+                        <h3 class="text-center mx-auto" style="color: white;">Dijkstra's Canvas</h3>
+                      </div>
+
+                      <div class="d-flex justify-content-center align-items-center">
+                        <input class="form-control-lg" style="text-align: center; margin-right: 1rem;" id="input" type="text" placeholder="A->B" spellcheck="false">
+                        <button type="button" class="btn btn-outline-info btn-md" onclick="fill()">Check</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
 
                 <!-- About Button (Needs to be last) -->
                 <div class="position-fixed top-0 end-0 p-2">
@@ -72,8 +78,6 @@ text {
                       </div>
                       <div class="modal-body">
                         <b>Dijkstra's Canvas v1.0</b>
-                        </br></br>
-                        Made with 💚 by <a href="https://www.kyles.world/" target="_blank" rel="noopener noreferrer">Kyle</a>
                         </br></br>
                         Found a bug? Let me know on <a href="https://www.github.com/kyletimmermans/DijkstrasCanvas/" target="_blank" rel="noopener noreferrer">GitHub</a>!
                         </br></br>
