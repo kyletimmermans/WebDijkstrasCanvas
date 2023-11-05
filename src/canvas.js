@@ -145,7 +145,7 @@ function drawVertex() {
     let clength = coords.length;
     for (let i = 0; i < clength; i++) {
         if (circleOverlap([m[0], m[1]], coords[i], 25)) {
-            console.error("Overlap!");
+            console.error("Node Overlap!");
             return;    
         }
     }
