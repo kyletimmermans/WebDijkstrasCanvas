@@ -34,22 +34,17 @@ var consoleSquare = document.getElementById("console-square");
 var errorAmount = 0;
 
 function console_error(msg) {
+    var errorMsgDiv = document.createElement("div");
+    errorMsgDiv.id = "error-msg";
+    errorMsgDiv.style.color = "#FF807F";
+    errorMsgDiv.style.background = "#290000";
+    errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg;
     if (errorAmount != 5) {
-        var errorMsgDiv = document.createElement("div");
-        errorMsgDiv.id = "error-msg";
-        errorMsgDiv.style.color = "#FF807F";
-        errorMsgDiv.style.background = "#290000";
-        errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg+"!";
         consoleSquare.appendChild(errorMsgDiv);
         errorAmount++;
     } else {
         // Remove all errors and start from the top
         Array.from(document.querySelectorAll('#error-msg')).forEach(errorDiv => errorDiv.remove());
-        var errorMsgDiv = document.createElement("div");
-        errorMsgDiv.id = "error-msg";
-        errorMsgDiv.style.color = "#FF807F";
-        errorMsgDiv.style.background = "#290000";
-        errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg+"!";
         consoleSquare.appendChild(errorMsgDiv);
         errorAmount = 1;
     }
@@ -128,9 +123,17 @@ function drawEdge(v, m) {
             // Generate randomIDs so each path can have a textPath find it uniquely
             let random = new Uint32Array(1);crypto.getRandomValues(random);
             
-            svg.append("path")
-                .attr("id", random[0].toString())
-                .attr("d", "M "+p[0]+" "+p[1]+" L "+p[2]+" "+p[3]);
+            // Prevent upside-down textPath label
+            // if x1 > x2, right to left draw
+            if (p[0] > p[2]) {
+                svg.append("path")
+                    .attr("id", random[0].toString())
+                    .attr("d", "M "+p[2]+" "+p[3]+" L "+p[0]+" "+p[1]);
+            } else { // Left to right normal
+                svg.append("path")
+                    .attr("id", random[0].toString())
+                    .attr("d", "M "+p[0]+" "+p[1]+" L "+p[2]+" "+p[3]);
+            }
 
             svg.append("text")
                 .attr("dy", -5)
@@ -139,10 +142,6 @@ function drawEdge(v, m) {
                 .style("text-anchor","middle") 
                 .attr("startOffset","50%")
                 .text(weight);
-        } else if (check == 1) {
-            console_error("Can't create an edge to the same vertex!");
-        } else if (check == 2) {
-            console_error("Edge already exists between these two vertices!");
         }
 
         // Reset so new edge can be drawn
@@ -276,20 +275,36 @@ function prettyMath(v1, v2) {
 }
 
 
+// Assign to reset-button
+const resetButton = document.getElementById("reset-button");
+resetButton.onclick = resetD3;
+
 // Reset all d3 objects for a new graph to be made
 function resetD3() {
     // Reset actual graph data structure
     G.resetGraph()
 
     // Remove all d3 objects
-    // d3.select all circles --> remove
-    // d3.select all edge labels --> remove
-    // d3.select all paths --> remove
-    // d3.select all pathlabels --> remove
+    svg.selectAll('text, circle, line, textPath, path').remove();
 
     // Reset all global variables
     clickTracker = 1;
     labelTracker = 'A';
     coords = [];
     tempv = [];
+}
+
+
+// Assign to reset-button
+const spathButton = document.getElementById("spath-button");
+spathButton.onclick = getShortestPath;
+
+function getShortestPath() {
+    inputs = document.getElementById("input-box").value.split("->");
+    var [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
+    //spath = G.dijsktra(v1, v2);
+
+    // if != 5 lines, keep going, just like error overflow
+    //printable_spath = inputs[0]+" to "+inputs[1]+": Path = "+spath.join(" → ")+"| Distance = "+distance;
+    //document.getElementById("spaths").appendChild(printable_spath);
 }
