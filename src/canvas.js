@@ -28,6 +28,33 @@ var line;
 var containerWidth = document.getElementById("canvas").getBoundingClientRect().width;
 var containerHeight = document.getElementById("canvas").getBoundingClientRect().height;
 
+// Append errors to html console
+var consoleSquare = document.getElementById("console-square");
+// Keep track of err nums to prevent console overflow
+var errorAmount = 0;
+
+function console_error(msg) {
+    if (errorAmount != 5) {
+        var errorMsgDiv = document.createElement("div");
+        errorMsgDiv.id = "error-msg";
+        errorMsgDiv.style.color = "#FF807F";
+        errorMsgDiv.style.background = "#290000";
+        errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg+"!";
+        consoleSquare.appendChild(errorMsgDiv);
+        errorAmount++;
+    } else {
+        // Remove all errors and start from the top
+        Array.from(document.querySelectorAll('#error-msg')).forEach(errorDiv => errorDiv.remove());
+        var errorMsgDiv = document.createElement("div");
+        errorMsgDiv.id = "error-msg";
+        errorMsgDiv.style.color = "#FF807F";
+        errorMsgDiv.style.background = "#290000";
+        errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg+"!";
+        consoleSquare.appendChild(errorMsgDiv);
+        errorAmount = 1;
+    }
+}
+
 // Create d3 window
 var svg = d3.select("body").append("svg") 
     .attr("width", containerWidth)
@@ -89,9 +116,9 @@ function drawEdge(v, m) {
 
         if (check != 0) {
             if (check == 1)
-                console.error("Can't create an edge to the same vertex!");
+                console_error("Can't create an edge to the same vertex!");
             if (check == 2)
-                console.error("Edge already exists between these two vertices!");
+                console_error("Edge already exists between these two vertices!");
         }
 
         if (check == 0) {
@@ -113,9 +140,9 @@ function drawEdge(v, m) {
                 .attr("startOffset","50%")
                 .text(weight);
         } else if (check == 1) {
-            console.error("Can't create an edge to the same vertex!");
+            console_error("Can't create an edge to the same vertex!");
         } else if (check == 2) {
-            console.error("Edge already exists between these two vertices!");
+            console_error("Edge already exists between these two vertices!");
         }
 
         // Reset so new edge can be drawn
@@ -134,7 +161,7 @@ function drawEdge(v, m) {
 function drawVertex() {
     // Limit amount of vertices
     if (labelTracker > "Z") {
-        console.error("Cannot add more vertices!");
+        console_error("Cannot add more vertices!");
         return;
     }
     
@@ -145,7 +172,7 @@ function drawVertex() {
     let clength = coords.length;
     for (let i = 0; i < clength; i++) {
         if (circleOverlap([m[0], m[1]], coords[i], 25)) {
-            console.error("Node Overlap!");
+            console_error("Node Overlap!");
             return;    
         }
     }
