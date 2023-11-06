@@ -14,7 +14,7 @@ can be applied to the graph, giving the shortest path between two given vertices
 </br>
 
 ## How to run it:
-1. git clone https://github.com/kyletimmermans/DijkstrasCanvas.git
+1. **git clone htt<span>ps://github.com</span>/kyletimmermans/DijkstrasCanvas.git**
 2. cd into _/src_
 3. Run: **python3 -m http.server**
 4. Visit localhost:8000/main.html in your web browser (Chrome works best)
