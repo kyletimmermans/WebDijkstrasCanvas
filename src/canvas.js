@@ -78,9 +78,9 @@ function drawEdge(v, m) {
         // 2nd line point (end point) on mousemove
         svg.on("mousemove", function() {
             var m2 = d3.mouse(this);
-            // -1 so the path line doesn't get in the way of 
+            // +7 so the path line doesn't get in the way of 
             // what the pointer (cursor) is actually intending to click
-            line.attr("x2", m2[0]-1).attr("y2", m2[1]-1)
+            line.attr("x2", m2[0]+7).attr("y2", m2[1])
         });
 
         // Put letter to number e.g. 'A' == 0 (1st node in actual graph DS)
