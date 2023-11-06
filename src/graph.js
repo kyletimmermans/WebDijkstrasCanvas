@@ -6,7 +6,7 @@ export class Graph {
     }
 
 
-    // Append the pointers to the new vertex, to the current vertices
+    // Append the pointers to the new vertex, to the current vertices.
     // Then create that new vertex with pointers to the current vertices
     addVertex() {
         let glength = this.graph.length;
