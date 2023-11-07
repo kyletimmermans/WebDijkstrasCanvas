@@ -34,7 +34,7 @@ var consoleSquare = document.getElementById("console-square");
 var errorAmount = 0;
 
 function console_error(msg) {
-    var errorMsgDiv = document.createElement("div");
+    let errorMsgDiv = document.createElement("div");
     errorMsgDiv.id = "error-msg";
     errorMsgDiv.style.color = "#FF807F";
     errorMsgDiv.style.background = "#290000";
@@ -299,12 +299,31 @@ function resetD3() {
 const spathButton = document.getElementById("spath-button");
 spathButton.onclick = getShortestPath;
 
-function getShortestPath() {
-    inputs = document.getElementById("input-box").value.split("->");
-    var [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
-    //spath = G.dijsktra(v1, v2);
+var spathDivCount = 0;
 
-    // if != 5 lines, keep going, just like error overflow
-    //printable_spath = inputs[0]+" to "+inputs[1]+": Path = "+spath.join(" → ")+"| Distance = "+distance;
-    //document.getElementById("spaths").appendChild(printable_spath);
+function getShortestPath() {
+    let inputs = document.getElementById("input-box").value.split("->");
+    let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
+    //spath = G.dijsktra(v1, v2);
+    let spath = ['K', 'J', 'Z', 'X'];
+    let distance = 20;
+
+    let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+distance+"</span>";
+    let spathDiv = document.createElement("div");
+    spathDiv.id = "spath-div";
+    spathDiv.style.display = "flex";
+    spathDiv.style.flexDirection = "column";
+    spathDiv.style.justifyContent = "center";
+    spathDiv.style.alignItems = "center";
+    spathDiv.style.color = "white";
+    spathDiv.style.fontSize = "18px";
+    spathDiv.innerHTML = printable_spath;
+    if (spathDivCount != 5) {
+        document.getElementById("spaths").appendChild(spathDiv);
+        spathDivCount++;
+    } else {
+        Array.from(document.querySelectorAll('#spath-div')).forEach(spathDiv => spathDiv.remove());
+        document.getElementById("spaths").appendChild(spathDiv);
+        spathDivCount = 1;
+    }
 }
