@@ -107,7 +107,7 @@ function drawEdge(v, m) {
         let dy = c1[2] - c2[2];
         let weight = Math.round(Math.sqrt(dx*dx+dy*dy) / 10);
 
-        var check = G.addEdge(tempv[0], tempv[1], weight);
+        let check = G.addEdge(tempv[0], tempv[1], weight);
 
         if (check != 0) {
             if (check == 1)
@@ -302,12 +302,25 @@ spathButton.onclick = getShortestPath;
 var spathDivCount = 0;
 
 function getShortestPath() {
-    let inputs = document.getElementById("input-box").value.split("->");
+    let inputBox = document.getElementById("input-box").value;
+    let inputs = inputBox.split("->");
     let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
-    //spath = G.dijsktra(v1, v2);
-    let spath = ['K', 'J', 'Z', 'X'];
-    let distance = 20;
 
+    // Input error handling
+    if (!inputBox.includes('->')) {
+        console_error("Incorrect input format!");
+        return;
+    } else if (inputs.length != 2) {
+        console_error("2 vertices required!");
+        return;
+    } else if ( (v1 > G.graph.length || v1 < G.graph.length) || (v2 > G.graph.length || v2 < G.graph.length) ) {
+        console_error("One or more vertices does not exist!");
+        return;       
+    }
+
+    let [spath, distance] = G.dijsktra(v1, v2);
+
+    // Append shortest paths on button click
     let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+distance+"</span>";
     let spathDiv = document.createElement("div");
     spathDiv.id = "spath-div";

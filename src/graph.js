@@ -3,6 +3,9 @@ export class Graph {
         // Stores vertices, the vertices' pointers to 
         // other vertices (edges), and the weights of the edges
         this.graph = [];
+
+        // Used to store the results of the recursive traversePath()
+        this.path = [];
     }
 
 
@@ -13,17 +16,17 @@ export class Graph {
 
         // No appending if its the first vertex, only creation
         if (glength > 0) {
-        // Add pointer to every other prexisting vertex to new vertex
-        for (let i = 0; i < glength; i++) {
-            // Init at 0 bc no edge between them yet
-            this.graph[i].push(0)
+            // Add pointer to every other prexisting vertex to new vertex
+            for (let i = 0; i < glength; i++) {
+                // Init at 0 bc no edge between them yet
+                this.graph[i].push(0)
+            }
         }
-    }
        
-      // Add new vertex
-      // +1 bc this node is being added to whats already there
-      let arr = new Array(glength+1).fill(0);
-      this.graph.push(arr);  
+        // Add new vertex
+        // +1 bc this node is being added to whats already there
+        let arr = new Array(glength+1).fill(0);
+        this.graph.push(arr);  
     }
 
 
@@ -60,15 +63,40 @@ export class Graph {
     }
 
 
+    // Recursive helper function to get shortest path elements
+    traversePath(parent, j) {
+        // Base case
+        if (parent[j] == -1) {
+            this.path.push(j);
+            return;   
+        }
+
+        // Recursive call to print the path from source to parent of current vertex
+        traversePath(parent, parent[j])
+
+        // add current vertex
+        this.path.push(j)
+    }
+
+
     // Src & Dst vertice
     dijkstra(v1, v2) {
-        return path;
+
+        traverseParent(parent, v2);
+
+        // Temporarily hold on to this.path and then free it up
+        let spath = this.path;
+        this.path = [];
+
+        // reverse() bc we went from dst to src and we want to src to dst
+        return [spath.reverse(), distance];
     }
 
 
     // Reset graph
     resetGraph() {
         this.graph = [];
+        this.path = [];
     }
 
 }
