@@ -60,62 +60,73 @@ export class Graph {
     }
 
 
-    // Recursive helper function to get shortest path elements-
-    // in order for given 'parent' array
-    traversePath(parents, j) {
-        // Base case
-        if (parent[j] == -1) {
-            this.path.push(j);
-            return;   
-        }
-
-        // Recursive call to print the path from source to parent of current vertex
-        traversePath(parents, parents[j])
-
-        // add current vertex
-        this.path.push(j)
-    }
-
-
     // Graph, Src & Dst vertices
     dijkstra(graph, src, dst) {
+
+        // Recursive helper function to get shortest path elements-
+        // in order for given 'parent' array
+        function traversePath(parents, j, spath) {
+            // Base case
+            if (parent[j] == -1) {
+                spath.push(j);
+                return;   
+            }
+
+            // Recursive call to print the path from source to parent of current vertex
+            traversePath(parents, parents[j], spath)
+
+            // add current vertex
+            spath.push(j)
+        }
 
         // Track shortest distances, paths, & visited
         let dist = new Array(graph.length).fill(Infinity);
         let parent = new Array(graph.length).fill(-1);
         let visited = new Array(graph.length).fill(false);
 
+        // Distance from src to itself is 0
+        // This will force the algorithm to start at this node
+        // because it is already the smallest in dist
         dist[src] = 0;
 
         // For all nodes in the graph
-        // u = currently selected node
-        for (let u = 0; u < graph.length; u++) {
+        for (let i = 0; i < graph.length; i++) {
 
             // Get the shortest-distanced non-visited vertex
             let temp_min = Infinity;
             let temp_idx = -1;
             for (let i = 0; i < graph.length; i++) {
-                if (visited[u] == false && dist[u] < temp_max) {
+                if (visited[i] == false && dist[i] < temp_max) {
                     // Update the newest minimums
-                    temp_max = dist[u];
-                    temp_idx = u;
+                    temp_max = dist[i];
+                    temp_idx = i;
                 }
             }
+
 
             // Mark as visited
             visited[min_idx] = true;
 
-        }
 
+            // v = neighbor node of min_idx
+            for (let v = 0; v < graph[min_idx].length; v++) {
+                // If the new distance from src to neighbor is shorter
+                // Update the distance and parent
+                if (graph[min_idx][v] + dist[min_idx] < dist[v]) {
+                    dist[v] = graph[min_idx][v] + dist[min_idx];
+                    parent[v] = min_idx;
+                }
+            }
+
+        }
 
 
         // Recursively go from final dst to src node and store path in spath
         // child -> parent -> child -> parent -> etc...
         let spath = [];
-        traverseParent(parent, dst, spath);
+        traversePath(parent, dst, spath);
 
-        // reverse() bc we went from dst to src and we want to src to dst
-        return [spath, distance];
+        return [spath, dist[dst]];
     }
 
 

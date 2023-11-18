@@ -78,9 +78,9 @@ function drawEdge(v, m) {
         // 2nd line point (end point) on mousemove
         svg.on("mousemove", function() {
             var m2 = d3.mouse(this);
-            // +7 so the path line doesn't get in the way of 
+            // +7, -4 so the path line doesn't get in the way of 
             // what the pointer (cursor) is actually intending to click
-            line.attr("x2", m2[0]+7).attr("y2", m2[1])
+            line.attr("x2", m2[0]+7).attr("y2", m2[1]-4)
         });
 
         // Put letter to number e.g. 'A' == 0 (1st node in actual graph DS)
@@ -313,15 +313,15 @@ function getShortestPath() {
     } else if (inputs.length != 2) {
         console_error("2 vertices required!");
         return;
-    } else if ( (v1 > G.graph.length || v1 < G.graph.length) || (v2 > G.graph.length || v2 < G.graph.length) ) {
+    } else if ( (v1 > G.graph.length || v1 < 0) || (v2 > G.graph.length || v2 < 0) ) {
         console_error("One or more vertices does not exist!");
         return;       
     }
 
-    let [spath, distance] = G.dijsktra(G, v1, v2);
+    let [spath, dist] = G.dijkstra(G, v1, v2);
 
     // Append shortest paths on button click
-    let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+distance+"</span>";
+    let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+dist+"</span>";
     let spathDiv = document.createElement("div");
     spathDiv.id = "spath-div";
     spathDiv.style.display = "flex";
