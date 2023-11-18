@@ -3,9 +3,6 @@ export class Graph {
         // Stores vertices, the vertices' pointers to 
         // other vertices (edges), and the weights of the edges
         this.graph = [];
-
-        // Used to store the results of the recursive traversePath()
-        this.path = [];
     }
 
 
@@ -63,8 +60,9 @@ export class Graph {
     }
 
 
-    // Recursive helper function to get shortest path elements
-    traversePath(parent, j) {
+    // Recursive helper function to get shortest path elements-
+    // in order for given 'parent' array
+    traversePath(parents, j) {
         // Base case
         if (parent[j] == -1) {
             this.path.push(j);
@@ -72,30 +70,57 @@ export class Graph {
         }
 
         // Recursive call to print the path from source to parent of current vertex
-        traversePath(parent, parent[j])
+        traversePath(parents, parents[j])
 
         // add current vertex
         this.path.push(j)
     }
 
 
-    // Src & Dst vertice
-    dijkstra(v1, v2) {
+    // Graph, Src & Dst vertices
+    dijkstra(graph, src, dst) {
 
-        traverseParent(parent, v2);
+        // Track shortest distances, paths, & visited
+        let dist = new Array(graph.length).fill(Infinity);
+        let parent = new Array(graph.length).fill(-1);
+        let visited = new Array(graph.length).fill(false);
 
-        // Temporarily hold on to this.path and then free it up
-        let spath = this.path;
-        this.path = [];
+        dist[src] = 0;
+
+        // For all nodes in the graph
+        // u = currently selected node
+        for (let u = 0; u < graph.length; u++) {
+
+            // Get the shortest-distanced non-visited vertex
+            let temp_min = Infinity;
+            let temp_idx = -1;
+            for (let i = 0; i < graph.length; i++) {
+                if (visited[u] == false && dist[u] < temp_max) {
+                    // Update the newest minimums
+                    temp_max = dist[u];
+                    temp_idx = u;
+                }
+            }
+
+            // Mark as visited
+            visited[min_idx] = true;
+
+        }
+
+
+
+        // Recursively go from final dst to src node and store path in spath
+        // child -> parent -> child -> parent -> etc...
+        let spath = [];
+        traverseParent(parent, dst, spath);
 
         // reverse() bc we went from dst to src and we want to src to dst
-        return [spath.reverse(), distance];
+        return [spath, distance];
     }
 
 
     // Reset graph
     resetGraph() {
-        this.graph = [];
         this.path = [];
     }
 

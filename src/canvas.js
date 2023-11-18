@@ -318,7 +318,7 @@ function getShortestPath() {
         return;       
     }
 
-    let [spath, distance] = G.dijsktra(v1, v2);
+    let [spath, distance] = G.dijsktra(G, v1, v2);
 
     // Append shortest paths on button click
     let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+distance+"</span>";
