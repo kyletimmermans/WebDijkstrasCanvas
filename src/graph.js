@@ -94,12 +94,12 @@ export class Graph {
 
             // Get the shortest-distanced non-visited vertex
             let temp_min = Infinity;
-            let temp_idx = -1;
+            let min_idx = -1;
             for (let i = 0; i < graph.length; i++) {
-                if (visited[i] == false && dist[i] < temp_max) {
+                if (visited[i] == false && dist[i] < temp_min) {
                     // Update the newest minimums
-                    temp_max = dist[i];
-                    temp_idx = i;
+                    temp_min = dist[i];
+                    min_idx = i;
                 }
             }
 
@@ -112,7 +112,7 @@ export class Graph {
             for (let v = 0; v < graph[min_idx].length; v++) {
                 // If the new distance from src to neighbor is shorter
                 // Update the distance and parent
-                if (graph[min_idx][v] + dist[min_idx] < dist[v]) {
+                if (graph[min_idx][v] + dist[min_idx] < dist[v] && graph[min_idx][v] != 0) {
                     dist[v] = graph[min_idx][v] + dist[min_idx];
                     parent[v] = min_idx;
                 }
