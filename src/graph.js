@@ -132,7 +132,7 @@ export class Graph {
 
     // Reset graph
     resetGraph() {
-        this.path = [];
+        this.graph = [];
     }
 
 }
