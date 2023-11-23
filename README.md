@@ -22,10 +22,10 @@ can be applied to the graph, giving the shortest path between two given vertices
 
 </br>
 
-Check out [Tkinter Dijkstra's Canvas](https://github.com/kyletimmermans/tkinter-dijkstras-canvas/) which was made in Python and Tkinter!
-
-</br>
-
 <p align="center">
   <img src="https://github.com/kyletimmermans/DijkstrasCanvas/blob/main/screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
 </p>
+
+</br>
+
+Check out [Tkinter Dijkstra's Canvas](https://github.com/kyletimmermans/tkinter-dijkstras-canvas/) which was made in Python and Tkinter!
