@@ -53,8 +53,14 @@ function console_error(msg) {
 var svg = d3.select("body").append("svg") 
     .attr("width", containerWidth)
     .attr("height", containerHeight)
-    .on("contextmenu", drawVertex);
-
+    .on("contextmenu", drawVertex)
+    .on("click", function() {
+        // Check if the background was clicked
+        if (!d3.event.target.matches("circle, text")) {
+            drawEdge(1, 1, true);
+        }
+    }
+);
 
 // Used w/ clickTracker
 // Keep track of src and dst node click
@@ -63,8 +69,11 @@ var svg = d3.select("body").append("svg")
 
 // v = the vertex we just clicked on so we know which vertices
 // we're working with here, m is the mouse object
-function drawEdge(v, m) {
+// c is check if the white background was clicked
+function drawEdge(v, m, c) {
     if (clickTracker == 1) {
+
+        if (c) { return; }
 
         // Begin to draw line, place down 1st (x1, y1) and 2nd (x2, y2) point
         line = svg.append("line")
@@ -72,14 +81,13 @@ function drawEdge(v, m) {
         .attr("y1", m[1])
         .attr("x2", m[0])
         .attr("y2", m[1])
+        .style("pointer-events", "none"); // Prevent line from interfering w/ mouse clicks on circles
 
         // Start changing the coords of the
         // 2nd line point (end point) on mousemove
         svg.on("mousemove", function() {
             var m2 = d3.mouse(this);
-            // +7, -4 so the path line doesn't get in the way of 
-            // what the pointer (cursor) is actually intending to click
-            line.attr("x2", m2[0]+7).attr("y2", m2[1]-4)
+            line.attr("x2", m2[0]).attr("y2", m2[1])
         });
 
         // Put letter to number e.g. 'A' == 0 (1st node in actual graph DS)
@@ -93,6 +101,9 @@ function drawEdge(v, m) {
         // Remove the line, it can't textPath, but we
         // used it for its easy coords system
         line.remove();
+
+        // If 2nd click is in white background, reset
+        if (c) { clickTracker = 1; tempv = []; return; }
 
         // Put in 2nd clicked vertex into tempv
         tempv.push(v.charCodeAt(0)-65)
@@ -147,8 +158,7 @@ function drawEdge(v, m) {
         clickTracker = 1;
 
         // Reset tempv for next temporary edge
-        tempv.pop();
-        tempv.pop();
+        tempv = [];
    }
 }
 
@@ -207,11 +217,11 @@ function drawVertex() {
     
     // Onclick the vertex/vertex label, start the draw_edge process
     vertex.on("click", function() {
-        drawEdge(vertexAttr, m);
+        drawEdge(vertexAttr, m, false);
     });
     
     vertexLabel.on("click", function() {
-        drawEdge(vertexAttr, m);
+        drawEdge(vertexAttr, m, false);
     });
     
     // Get current letter, turn to num, add 1, turn back to new character
@@ -304,7 +314,6 @@ function getShortestPath() {
     let inputBox = document.getElementById("input-box").value;
     let inputs = inputBox.split("->");
     let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
-    console.log(v1, v2);
 
     // Input error handling
     if (!inputBox.includes('->')) {
