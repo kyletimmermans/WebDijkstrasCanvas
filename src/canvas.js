@@ -313,7 +313,6 @@ var spathDivCount = 0;
 function getShortestPath() {
     let inputBox = document.getElementById("input-box").value;
     let inputs = inputBox.split("->");
-    let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
 
     // Input error handling
     if (!inputBox.includes('->')) {
@@ -322,12 +321,17 @@ function getShortestPath() {
     } else if (inputs.length != 2) {
         console_error("2 vertices required!");
         return;
+    }
+
+    let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
+
+    // Input error handling
+    if ( (v1 > G.graph.length || v1 < 0) || (v2 > G.graph.length || v2 < 0) ) {
+        console_error("One or more vertices does not exist!");
+        return;       
     } else if (isNaN(v1) || isNaN(v2)) {
         console_error("Vertices improperly entered!");
         return;
-    } else if ( (v1 > G.graph.length || v1 < 0) || (v2 > G.graph.length || v2 < 0) ) {
-        console_error("One or more vertices does not exist!");
-        return;       
     }
 
     let [spath, dist] = G.dijkstra(G.graph, v1, v2);
