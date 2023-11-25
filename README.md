@@ -24,7 +24,7 @@ can be applied to the graph, giving the shortest path between two given vertices
 
 ### Program Screenshot
 <p align="center">
-  <img src="https://github.com/kyletimmermans/WebDijkstrasCanvas/blob/main/program-screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
+  <img src="https://github.com/kyletimmermans/WebDijkstrasCanvas/blob/main/example_screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
 </p>
 
 </br>
