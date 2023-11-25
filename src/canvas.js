@@ -35,9 +35,9 @@ var errorAmount = 0;
 
 function console_error(msg) {
     let errorMsgDiv = document.createElement("div");
-    errorMsgDiv.id = "error-msg";errorMsgDiv.style.color = "#FF807F";
-    errorMsgDiv.style.background = "#290000";
-    errorMsgDiv.innerHTML = "&emsp;ⓧ Error: "+msg;
+    errorMsgDiv.id="error-msg";errorMsgDiv.style.color="#FF807F";
+    errorMsgDiv.style.background="#290000";
+    errorMsgDiv.innerHTML="&emsp;ⓧ Error: "+msg;
     if (errorAmount != 5) {
         consoleSquare.appendChild(errorMsgDiv);
         errorAmount++;
@@ -335,14 +335,25 @@ function getShortestPath() {
     }
 
     let [spath, dist] = G.dijkstra(G.graph, v1, v2);
+
+    if (dist == Infinity) {
+        console_error("No connection found!");
+        return;
+    }
+
     spath = spath.map((x) => String.fromCharCode(x+65));
 
     // Append shortest paths on button click
     let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+dist+"</span>";
     let spathDiv = document.createElement("div");
-    spathDiv.id = "spath-div";spathDiv.style.display = "flex";spathDiv.style.flexDirection = "column";
-    spathDiv.style.justifyContent = "center";spathDiv.style.alignItems = "center";
-    spathDiv.style.color = "white";spathDiv.style.fontSize = "18px";
+    spathDiv.id="spath-div";spathDiv.style.display="flex";spathDiv.style.flexDirection="column";
+    spathDiv.style.justifyContent="center";spathDiv.style.alignItems="center";
+    spathDiv.style.color="white";spathDiv.style.fontSize="18px";
+    if (window.innerHeight != screen.height) {
+        spathDiv.style.paddingBottom="0.8vh";
+    } else {
+        spathDiv.style.paddingBottom="1.2vh";
+    }
     spathDiv.innerHTML = printable_spath;
     if (spathDivCount != 5) {
         document.getElementById("spaths").appendChild(spathDiv);
