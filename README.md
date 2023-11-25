@@ -7,7 +7,7 @@
 
 # <div align="center">Web Dijkstra's Canvas</div>
 
-A web app that allows users to draw a visual undirected weighted graph with the mouse,
+Web Dijkstra's Canvas is a web app that allows users to draw a visual undirected weighted graph with the mouse,
 where weights are automatically assigned to the the edges based on their length. After drawing the graph, Dijkstra's algorithm
 can be applied to the graph, giving the shortest path between two given vertices.
 
@@ -24,9 +24,9 @@ can be applied to the graph, giving the shortest path between two given vertices
 
 ### Program Screenshot
 <p align="center">
-  <img src="https://github.com/kyletimmermans/DijkstrasCanvas/blob/main/screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
+  <img src="https://github.com/kyletimmermans/WebDijkstrasCanvas/blob/main/program-screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
 </p>
 
 </br>
 
-Also check out [Tkinter Dijkstra's Canvas](https://github.com/kyletimmermans/tkinter-dijkstras-canvas/) which was made in Python and Tkinter!
+Also check out the original [Dijkstra's Canvas](https://github.com/kyletimmermans/dijkstras-canvas/) which was made in Python3 and Tkinter!
