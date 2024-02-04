@@ -301,6 +301,17 @@ function resetD3() {
     labelTracker = 'A';
     coords = [];
     tempv = [];
+
+    // Reset shortest paths and console output
+    // Element overflow trackers
+    spathDivCount = 0;
+    errorAmount = 0;
+
+    // Remove visuals output
+    var elementsToRemove = document.querySelectorAll("#spath-div, #error-msg");
+    elementsToRemove.forEach(function(element) {
+        element.remove();
+    });
 }
 
 
@@ -326,7 +337,8 @@ function getShortestPath() {
     let [v1, v2] = [inputs[0].charCodeAt(0)-65, inputs[1].charCodeAt(0)-65];
 
     // Input error handling
-    if ( (v1 > G.graph.length || v1 < 0) || (v2 > G.graph.length || v2 < 0) ) {
+    // +1 so we don't compare array indexing with length of graph, but rather we compare amounts
+    if ( (( v1+1) > G.graph.length || (v1+1) < 0) || ( (v2+1) > G.graph.length || (v2+1) < 0) ) {
         console_error("One or more vertices does not exist!");
         return;       
     } else if (isNaN(v1) || isNaN(v2)) {
@@ -348,7 +360,11 @@ function getShortestPath() {
     let spathDiv = document.createElement("div");
     spathDiv.id="spath-div";spathDiv.style.display="flex";spathDiv.style.flexDirection="column";
     spathDiv.style.justifyContent="center";spathDiv.style.alignItems="center";
-    spathDiv.style.color="white";spathDiv.style.fontSize="18px";
+    if (window.visualViewport.width >= 1600 && window.visualViewport.height >= 900) {
+        spathDiv.style.color="white";spathDiv.style.fontSize="1.25vw";
+    } else{
+        spathDiv.style.color="white";spathDiv.style.fontSize="18px";
+    }
     if (window.innerHeight != screen.height) {
         spathDiv.style.paddingBottom="0.8vh";
     } else {
