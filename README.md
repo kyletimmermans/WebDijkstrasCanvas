@@ -1,4 +1,4 @@
-![Version 1.0](https://img.shields.io/badge/version-v1.0-lightblue.svg)
+![Version 1.1](https://img.shields.io/badge/version-v1.1-lightblue.svg)
 ![d3.js 7.8](https://img.shields.io/badge/d3.js-5.9.2-EE7234.svg)
 ![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5-8B11FA.svg)
 ![Last Updated](https://img.shields.io/github/last-commit/kyletimmermans/webdijkstrascanvas?color=success)
@@ -26,6 +26,14 @@ can be applied to the graph, giving the shortest path between two given vertices
 <p align="center">
   <img src="https://github.com/kyletimmermans/WebDijkstrasCanvas/blob/main/example_screenshot.png?raw=true" alt="Dijkstra's Canvas"/>
 </p>
+
+</br>
+
+### Changelog
+<div>v1.0: Initial-Release</div>
+<div>v1.1:<div>
+<div>&ensp;&ensp;-Better error handling for getting shortest paths to non-existant nodes</div>
+<div>&ensp;&ensp;-Added dynamic font size for larger screens</div>
 
 </br>
 
