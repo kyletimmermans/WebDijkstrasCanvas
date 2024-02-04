@@ -34,6 +34,7 @@ can be applied to the graph, giving the shortest path between two given vertices
 <div>v1.1:<div>
 <div>&ensp;&ensp;-Better error handling for getting shortest paths to non-existant nodes</div>
 <div>&ensp;&ensp;-Added dynamic font size for larger screens</div>
+<div>&ensp;&ensp;-Reset button now also removes pervious shortest path results and error messages</div>
 
 </br>
 
