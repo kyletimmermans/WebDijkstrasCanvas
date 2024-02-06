@@ -38,6 +38,11 @@ function console_error(msg) {
     errorMsgDiv.id="error-msg";errorMsgDiv.style.color="#FF807F";
     errorMsgDiv.style.background="#290000";
     errorMsgDiv.innerHTML="&emsp;ⓧ Error: "+msg;
+    if (window.visualViewport.width >= 1600 && window.visualViewport.height >= 900) {
+        errorMsgDiv.style.fontSize="1.11vw";
+    } else{
+        errorMsgDiv.style.fontSize="16px";
+    }
     if (errorAmount != 5) {
         consoleSquare.appendChild(errorMsgDiv);
         errorAmount++;
@@ -338,7 +343,7 @@ function getShortestPath() {
 
     // Input error handling
     // +1 so we don't compare array indexing with length of graph, but rather we compare amounts
-    if ( (( v1+1) > G.graph.length || (v1+1) < 0) || ( (v2+1) > G.graph.length || (v2+1) < 0) ) {
+    if ( ( (v1+1) > G.graph.length || (v1+1) < 0) || ( (v2+1) > G.graph.length || (v2+1) < 0) ) {
         console_error("One or more vertices does not exist!");
         return;       
     } else if (isNaN(v1) || isNaN(v2)) {
@@ -360,10 +365,11 @@ function getShortestPath() {
     let spathDiv = document.createElement("div");
     spathDiv.id="spath-div";spathDiv.style.display="flex";spathDiv.style.flexDirection="column";
     spathDiv.style.justifyContent="center";spathDiv.style.alignItems="center";
+    spathDiv.style.color="white";
     if (window.visualViewport.width >= 1600 && window.visualViewport.height >= 900) {
-        spathDiv.style.color="white";spathDiv.style.fontSize="1.25vw";
+        spathDiv.style.fontSize="1.25vw";
     } else{
-        spathDiv.style.color="white";spathDiv.style.fontSize="18px";
+        spathDiv.style.fontSize="18px";
     }
     if (window.innerHeight != screen.height) {
         spathDiv.style.paddingBottom="0.8vh";
