@@ -1,7 +1,7 @@
-![Version 1.1](https://img.shields.io/badge/version-v1.1-lightblue.svg)
+![Version 1.1](https://img.shields.io/badge/Version-1.1-lightblue.svg)
 ![d3.js 7.8](https://img.shields.io/badge/d3.js-5.9.2-EE7234.svg)
 ![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5-8B11FA.svg)
-![Last Updated](https://img.shields.io/github/last-commit/kyletimmermans/webdijkstrascanvas?color=success)
+![Lastest Commit](https://img.shields.io/github/last-commit/kyletimmermans/webdijkstrascanvas?color=success&label=Latest%20Commit)
 [![kyletimmermans Twitter](http://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow)](https://twitter.com/kyletimmermans)
 
 
