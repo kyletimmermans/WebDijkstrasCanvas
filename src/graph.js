@@ -1,7 +1,6 @@
 export class Graph {
     constructor() {
-        // Stores vertices, the vertices' pointers to 
-        // other vertices (edges), and the weights of the edges
+        // Stores vertices, the vertices' pointers to other vertices (edges), and the weights of the edges
         this.graph = [];
     }
 
@@ -19,11 +18,11 @@ export class Graph {
                 this.graph[i].push(0)
             }
         }
-       
+
         // Add new vertex
         // +1 bc this node is being added to whats already there
         let arr = new Array(glength+1).fill(0);
-        this.graph.push(arr);  
+        this.graph.push(arr);
     }
 
 
@@ -42,8 +41,7 @@ export class Graph {
             return 2;
         }
 
-        // Set each vertices' pointer to one another,
-        // to be equal to their edge weight
+        // Set each vertices' pointer to one another, to be equal to their edge weight
         // v1 point to v2 & v2 point to v1
         let glength = this.graph.length;
         for (let i = 0; i < glength; i++) {
@@ -63,19 +61,18 @@ export class Graph {
     // Graph, Src & Dst vertices
     dijkstra(graph, src, dst) {
 
-        // Recursive helper function to get shortest path elements-
-        // in order for given 'parent' array
+        // Recursive helper function to get shortest path elements in order for given 'parent' array
         function traversePath(parents, j, spath) {
             // Base case
             if (parent[j] == -1) {
                 spath.push(j);
-                return;   
+                return;
             }
 
             // Recursive call to print the path from source to parent of current vertex
             traversePath(parents, parents[j], spath)
 
-            // add current vertex
+            // Add current vertex
             spath.push(j)
         }
 
@@ -85,8 +82,7 @@ export class Graph {
         let visited = new Array(graph.length).fill(false);
 
         // Distance from src to itself is 0
-        // This will force the algorithm to start at this node
-        // because it is already the smallest in dist
+        // This will force the algorithm to start at this node because it is already the smallest in dist
         dist[src] = 0;
 
         // For all nodes in the graph

@@ -55,7 +55,7 @@ function console_error(msg) {
 }
 
 // Create d3 window
-var svg = d3.select("body").append("svg") 
+var svg = d3.select("body").append("svg")
     .attr("width", containerWidth)
     .attr("height", containerHeight)
     .on("contextmenu", drawVertex)
@@ -116,7 +116,7 @@ function drawEdge(v, m, c) {
         // Get coords of specific vertices by using their letter to find them
         let c1 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[0]+65));
         let c2 = coords.find(innerArray=>innerArray[0]===String.fromCharCode(tempv[1]+65));
-        
+
         // Weight = Distance between points / 10
         let dx = c1[1] - c2[1];
         let dy = c1[2] - c2[2];
@@ -134,10 +134,10 @@ function drawEdge(v, m, c) {
         if (check == 0) {
             // Create pretty points for nice path to be drawn from node-to-node
             let p = prettyPoints([c1[1], c1[2]], [c2[1], c2[2]])
-            
+
             // Generate randomIDs so each path can have a textPath find it uniquely
             let random = new Uint32Array(1);crypto.getRandomValues(random);
-            
+
             // Prevent upside-down textPath label
             // if x1 > x2, right to left draw
             if (p[0] > p[2]) {
@@ -154,7 +154,7 @@ function drawEdge(v, m, c) {
                 .attr("dy", -5)
                 .append("textPath")
                 .attr("xlink:href","#"+random[0].toString())
-                .style("text-anchor","middle") 
+                .style("text-anchor","middle")
                 .attr("startOffset","50%")
                 .text(weight);
         }
@@ -177,16 +177,16 @@ function drawVertex() {
         console_error("Cannot add more vertices!");
         return;
     }
-    
+
     // Mouse coords (constantly changing)
     var m = d3.mouse(this);
-    
+
     // Check for vertex overlap
     let clength = coords.length;
     for (let i = 0; i < clength; i++) {
         if (circleOverlap([m[0], m[1]], coords[i], 25)) {
             console_error("Node Overlap!");
-            return;    
+            return;
         }
     }
 
@@ -196,10 +196,10 @@ function drawVertex() {
         .attr('cy', m[1])
         .attr('r', 25)
         .style('fill', 'green');
-    
+
     // Add its coords to the list (x, y)
     coords.push([labelTracker, m[0], m[1]]);
-   
+
     // Label the circle with a letter
     var vertexLabel = svg.append('text')
         .attr('x', m[0])
@@ -207,10 +207,10 @@ function drawVertex() {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
         .text(labelTracker);
-    
+
     // Add vertex to actual graph
     G.addVertex();
-    
+
     // Creates a local copy of labelTracker that is specific to the
     // circle and label being created and attached to the click handler and stored.
     // The click handler needs to remember the value that was in the local scope at the time it
@@ -219,16 +219,16 @@ function drawVertex() {
     // If the events are called later, they won't have anything to use for drawEdge,
     // so save it now while we have it
     let vertexAttr = labelTracker;
-    
+
     // Onclick the vertex/vertex label, start the draw_edge process
     vertex.on("click", function() {
         drawEdge(vertexAttr, m, false);
     });
-    
+
     vertexLabel.on("click", function() {
         drawEdge(vertexAttr, m, false);
     });
-    
+
     // Get current letter, turn to num, add 1, turn back to new character
     labelTracker = String.fromCharCode(labelTracker.charCodeAt(0) + 1);
 }
@@ -247,7 +247,7 @@ function circleOverlap(c1, c2, r) {
     // c1 only has 2 fields bc has no letter, just raw coords
     let dx = c1[0] - c2[1];
     let dy = c1[1] - c2[2];
-    let distance = Math.sqrt(dx*dx+dy*dy) 
+    let distance = Math.sqrt(dx*dx+dy*dy)
     if (distance <= r + r) {
         return true;
     } else {
@@ -345,7 +345,7 @@ function getShortestPath() {
     // +1 so we don't compare array indexing with length of graph, but rather we compare amounts
     if ( ( (v1+1) > G.graph.length || (v1+1) < 0) || ( (v2+1) > G.graph.length || (v2+1) < 0) ) {
         console_error("One or more vertices does not exist!");
-        return;       
+        return;
     } else if (isNaN(v1) || isNaN(v2)) {
         console_error("Vertices improperly entered!");
         return;
@@ -363,9 +363,7 @@ function getShortestPath() {
     // Append shortest paths on button click
     let printable_spath = "<span><u>"+inputs[0]+" to "+inputs[1]+"</u>: "+spath.join(" → ")+" | Dst = "+dist+"</span>";
     let spathDiv = document.createElement("div");
-    spathDiv.id="spath-div";spathDiv.style.display="flex";spathDiv.style.flexDirection="column";
-    spathDiv.style.justifyContent="center";spathDiv.style.alignItems="center";
-    spathDiv.style.color="white";
+    spathDiv.id="spath-div";
     if (window.visualViewport.width >= 1600 && window.visualViewport.height >= 900) {
         spathDiv.style.fontSize="1.25vw";
     } else{
